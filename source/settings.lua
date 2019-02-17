@@ -5,7 +5,7 @@ lk = love.keyboard
 lf = love.filesystem
 
 --constants
-SCALE = 2
+SCALE = 3
 
 --window settings
 lg.setBackgroundColor( 0, 0, 0 )
@@ -14,3 +14,6 @@ screen = {}
 screen.w = 320 * SCALE
 screen.h = 200 * SCALE
 love.window.setMode(screen.w, screen.h, {fullscreen = false, centered = true})
+
+--random seed
+math.randomseed(os.time())
