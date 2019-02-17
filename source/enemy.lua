@@ -24,7 +24,7 @@ function Enemy.new()
     anim = {},
     pos   = { 
       x = 360, 
-      y = math.random(-50,150) 
+      y = math.random(75,200) 
     },
     size  = {
       w = 53,

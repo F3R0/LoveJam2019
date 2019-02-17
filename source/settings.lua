@@ -1,14 +1,12 @@
 --shortcuts to love libraries
 lg = love.graphics
-lp = love.physics
-lk = love.keyboard
-lf = love.filesystem
+la = love.audio
 
 --constants
 SCALE = 3
 
 --window settings
-lg.setBackgroundColor( 0, 0, 0 )
+lg.setBackgroundColor( 0.5, 0.5, 0.5)
 lg.setDefaultFilter('nearest', 'nearest')
 screen = {}
 screen.w = 320 * SCALE
