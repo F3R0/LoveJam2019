@@ -9,11 +9,9 @@ _input  = require 'plugins.Input'
 _player = require 'source.player'
 _horde  = require 'source.horde'
 _enemy  = require 'source.enemy'
+_map    = require 'source.map'
 
 function love.load()
-  love.graphics.setDefaultFilter('nearest', 'nearest')
-  map = love.graphics.newImage('graphics/map.png')
-
   camera = _camera(160, 100, 320, 200)
   camera:setFollowLerp(0.1)
   camera:setFollowStyle('TOPDOWN')
@@ -21,12 +19,14 @@ function love.load()
   input = _input()
   player = _player()
   horde = _horde()
+  map = _map()
 
   --canvas
   canvas = love.graphics.newCanvas(960, 200)
 end
 
 function love.update(dt)
+  map:update(dt)
   player:update(dt)
   horde:update(dt)
   camera:update(dt)
@@ -39,11 +39,12 @@ function love.draw()
   
   camera:attach()
   
-  love.graphics.draw(map, 0, 0)
-
+  map:draw()
   horde:draw(false)
   player:draw()
   horde:draw(true)
+
+  debugCanvas()
 
   camera:detach()
   camera:draw()
@@ -55,5 +56,5 @@ function love.draw()
   love.graphics.draw(canvas, 0, 0, 0, SCALE, SCALE)
   love.graphics.setBlendMode('alpha')
   
-  --debug()
+  debug()
 end
