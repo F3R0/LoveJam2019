@@ -22,8 +22,6 @@ function love.load()
   player = _player()
   horde = _horde()
 
-  collision = false
-
   --canvas
   canvas = love.graphics.newCanvas(960, 200)
 end
@@ -42,8 +40,10 @@ function love.draw()
   camera:attach()
   
   love.graphics.draw(map, 0, 0)
+
+  horde:draw(false)
   player:draw()
-  horde:draw()
+  horde:draw(true)
 
   camera:detach()
   camera:draw()
@@ -55,5 +55,5 @@ function love.draw()
   love.graphics.draw(canvas, 0, 0, 0, SCALE, SCALE)
   love.graphics.setBlendMode('alpha')
   
-  debug()
+  --debug()
 end
