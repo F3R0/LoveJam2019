@@ -19,3 +19,17 @@ function debug()
   --drag power
   lg.print('drag power: ' .. player.drag_power, 1, 56)
 end
+
+function debugCanvas()
+  --enemy hitbox
+  for i, enemy in ipairs(horde.enemies) do
+    lg.rectangle("line", enemy.pos.x, enemy.pos.y, enemy.size.w, enemy.size.h)
+  end
+
+  --player hitbox
+  if player.face == 1 then
+    lg.rectangle("line", player.x, player.y - player.h / 2, player.w / 2, player.h)
+  else
+    lg.rectangle("line", player.x - player.w / 2, player.y - player.h / 2, player.w / 2, player.h)      
+  end
+end
