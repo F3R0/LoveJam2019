@@ -158,13 +158,10 @@ function Player:update(dt)
     self.hit = true
 
     for i, enemy in ipairs(horde.enemies) do
-      if checkHit(self, self.face, enemy.pos, enemy.size) then
-        enemy.health = enemy.health - 30 * self.drag_power
-        enemy.damaged = true
+      if checkHit(self, self.face, enemy.pos, enemy.size) and not enemy.damaged then
 
-        if enemy.health < 0 then
-          --table.remove(horde.enemies, i)
-        end
+        enemy.health = enemy.health - 20 * self.drag_power
+        enemy.damaged = true
       end
     end
 
@@ -180,11 +177,7 @@ function Player:update(dt)
 end
 
 function Player:draw()
-  
-  lg.rectangle("line", self.x - self.w / 2, self.y - self.h / 2, self.w, self.h)
-  
   self.anim:draw(self.x, self.y, 0, self.face, 1, self.w / 2, self.h / 2)
-
 
   if self.debug and self.hit then
     lg.setColor(1, 0, 0)
