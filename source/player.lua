@@ -10,7 +10,7 @@ local function move(self, dir, dt)
 
   if dir == Directions.left and self.x < 50 then return end 
   if dir == Directions.right and self.x > 860 then return end 
-  if dir == Directions.up and self.y < 0 then return end 
+  if dir == Directions.up and self.y < 70 then return end 
   if dir == Directions.down and self.y > 200 then return end 
 
   if dir == Directions.up then
@@ -94,8 +94,11 @@ function Player.new()
       hit = false,
       walk = false,
       drag = false,
-      debug = false,
       drag_power = 1,
+      audio = {
+        slash_1 = la.newSource("sound/Slash1.wav", "static"),
+        slash_2 = la.newSource("sound/Slash2.wav", "static")
+      }
     }, Player)
 end
 
@@ -168,9 +171,13 @@ function Player:update(dt)
     if self.drag_power > 10 then
       camera:shake(8, 1, 60)
       self.anim = self.anims.attack_heavy
+      self.audio.slash_2:play()
     else
       self.anim = self.anims.attack_light
+      self.audio.slash_1:play()
     end
+
+    self.drag_power = 1 
   end
   
   self.anim:update(dt);
@@ -178,18 +185,6 @@ end
 
 function Player:draw()
   self.anim:draw(self.x, self.y, 0, self.face, 1, self.w / 2, self.h / 2)
-
-  if self.debug and self.hit then
-    lg.setColor(1, 0, 0)
-
-    if self.face == 1 then
-      lg.rectangle("line", self.x, self.y - self.h / 2, self.w / 2, self.h)
-    else
-      lg.rectangle("line", self.x - self.w / 2, self.y - self.h / 2, self.w / 2, self.h)      
-    end
-
-    lg.setColor(1, 1, 1)
-  end
 end
 
 return setmetatable({}, {__call = function(_, ...) return Player.new(...) end})
