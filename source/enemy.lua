@@ -4,15 +4,15 @@ Enemy.__index = Enemy
 function Enemy.new()
   --walk
   local img_walk  = lg.newImage('graphics/Enemy/EN_Walking.png')
-  local anim_walk = anim.new(img_walk, 80, 60, 0.3)
+  local anim_walk = anim.new(img_walk, 53, 46, 0.3)
 
   --attack
   local img_attack  = lg.newImage('graphics/Enemy/EN_Attack.png')
-  local anim_attack = anim.new(img_attack, 80, 60, 0.3)
+  local anim_attack = anim.new(img_attack, 53, 46, 0.3)
 
   --dying
   local img_dying  = lg.newImage('graphics/Enemy/EN_Dying.png')
-  local anim_dying = anim.new(img_dying, 80, 60, 0.3)
+  local anim_dying = anim.new(img_dying, 53, 46, 0.1)
 
   return setmetatable({
     speed = math.random(10, 20),
@@ -24,20 +24,22 @@ function Enemy.new()
     anim = {},
     pos   = { 
       x = 360, 
-      y = math.random(0,200) 
+      y = math.random(-50,150) 
     },
     size  = {
-      w = 56,
-      h = 56
+      w = 53,
+      h = 46
     },
     damaged = false,
-    health = 100
+    health = 100,
+    deadTime = 0
   }, Enemy)
 end
 
 function Enemy:update(dt)
   if self.health < 0 then
     self.anim = self.anims.dying
+    self.deadTime = self.deadTime + dt
   elseif self.pos.x < 100 then
       self.anim = self.anims.attack
   else
@@ -55,10 +57,10 @@ function Enemy:draw()
 
   self.anim:draw(self.pos.x, self.pos.y)
   lg.setColor(1, 1, 1)
+end
 
-  lg.setColor(1, 0, 0)
-  lg.rectangle("line", self.pos.x, self.pos.y, self.size.w, self.size.h)
-  lg.setColor(1, 1, 1)
+function Enemy:__lt(other)
+  return self.pos.y < other.pos.y
 end
 
 return setmetatable({}, {__call = function(_, ...) return Enemy.new(...) end})
