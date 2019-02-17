@@ -2,11 +2,13 @@ require 'source.settings'
 require 'source.states'
 require 'source.debug'
 require 'source.states'
+require 'source.anim'
 
-local _anim = require 'plugins.anim8'
-local _camera = require 'plugins.Camera'
-local _input = require 'plugins.Input'
-local _player = require 'source.player'
+_camera = require 'plugins.Camera'
+_input  = require 'plugins.Input'
+_player = require 'source.player'
+_horde  = require 'source.horde'
+_enemy  = require 'source.enemy'
 
 function love.load()
   love.graphics.setDefaultFilter('nearest', 'nearest')
@@ -15,10 +17,12 @@ function love.load()
   camera = _camera(160, 100, 320, 200)
   camera:setFollowLerp(0.1)
   camera:setFollowStyle('TOPDOWN')
-  camera.draw_deadzone = true
   
   input = _input()
   player = _player()
+  horde = _horde()
+
+  collision = false
 
   --canvas
   canvas = love.graphics.newCanvas(960, 200)
@@ -26,7 +30,7 @@ end
 
 function love.update(dt)
   player:update(dt)
-  
+  horde:update(dt)
   camera:update(dt)
   camera:follow(player.x, player.y)
 end
@@ -39,13 +43,13 @@ function love.draw()
   
   love.graphics.draw(map, 0, 0)
   player:draw()
-  
+  horde:draw()
+
   camera:detach()
   camera:draw()
     
-  love.graphics.setCanvas()
-  
   -- Draw the 400x300 canvas scaled by 2 to a 800x600 screen
+  love.graphics.setCanvas()
   love.graphics.setColor(1, 1, 1, 1)
   love.graphics.setBlendMode('alpha', 'premultiplied')
   love.graphics.draw(canvas, 0, 0, 0, SCALE, SCALE)
