@@ -4,12 +4,6 @@ SceneState = {
   cred = 2
 }
 
-WalkState = {
-	idle  = 'idle',
-	walk  = 'walk',
-	drag 	= 'drag'
-}
-
 Directions = {
   up = 'up', 
   down = 'down', 
