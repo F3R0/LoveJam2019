@@ -24,7 +24,7 @@ function Horde:update(dt)
   for i, enemy in ipairs(self.enemies) do
     enemy:update(dt)
     
-    if enemy.deadTime > 0.8 then
+    if enemy.deadTime > 1.5 then
       table.remove(horde.enemies, i)
     end
   end

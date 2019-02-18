@@ -2,6 +2,8 @@ local Enemy = {}
 Enemy.__index = Enemy
 
 local deathAudio = la.newSource('sound/Death.wav', "static")
+deathAudio:setLooping(false)
+
 local hitWall = la.newSource('sound/EnemyHitWall.wav', "static")
 
 function Enemy.new()
@@ -11,7 +13,7 @@ function Enemy.new()
 
   --attack
   local img_attack  = lg.newImage('graphics/Enemy/EN_Attack.png')
-  local anim_attack = anim.new(img_attack, 53, 46, 0.3)
+  local anim_attack = anim.new(img_attack, 53, 46, 0.1)
 
   --dying
   local img_dying  = lg.newImage('graphics/Enemy/EN_Dying.png')
@@ -50,6 +52,10 @@ function Enemy:update(dt)
   else
     self.anim = self.anims.walk
     self.pos.x = self.pos.x - dt * self.speed;
+  end
+
+  if self.deadTime > 1 then 
+    deathAudio:stop()
   end
 
   self.anim:update(dt)
