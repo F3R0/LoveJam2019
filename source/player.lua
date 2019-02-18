@@ -8,10 +8,10 @@ local function move(self, dir, dt)
   self.walk = true
   self.direction = dir
 
-  if dir == Directions.left and self.x < 50 then return end 
+  if dir == Directions.left  and self.x < 50  then return end 
   if dir == Directions.right and self.x > 860 then return end 
-  if dir == Directions.up and self.y < 70 then return end 
-  if dir == Directions.down and self.y > 200 then return end 
+  if dir == Directions.up    and self.y < 70  then return end 
+  if dir == Directions.down  and self.y > 200 then return end 
 
   if dir == Directions.up then
     self.y = self.y - dt * self.speed;

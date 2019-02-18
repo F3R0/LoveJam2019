@@ -36,7 +36,7 @@ function Enemy.new()
       h = 46
     },
     damaged = false,
-    health = math.random(50,100),
+    health = math.random(50,80),
     deadTime = 0
   }, Enemy)
 end
@@ -46,7 +46,7 @@ function Enemy:update(dt)
     deathAudio:play()
     self.anim = self.anims.dying
     self.deadTime = self.deadTime + dt
-  elseif self.pos.x < 100 then
+  elseif self.pos.x < 20 then
     self.anim = self.anims.attack
     hitWall:play()
   else

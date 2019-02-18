@@ -8,6 +8,7 @@ function Map.new()
     ground  = lg.newImage('graphics/map/ground.png'),
     sky     = lg.newImage('graphics/map/sky.png'),
     bars    = lg.newImage('graphics/map/bars.png'),
+    walls   = lg.newImage('graphics/map/walls.png'),
     health  = 100
   }, Map)
 end
@@ -36,6 +37,8 @@ function Map:draw()
   for i=-3, 9 do
     lg.draw(self.ground, i * 104, 62)
   end
+
+  lg.draw(self.walls, -120, -40)
 end
 
 function Map:drawBars()

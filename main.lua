@@ -82,7 +82,7 @@ function love.draw()
     player:draw()
     horde:draw(true)
 
-    debugCanvas()
+    --debugCanvas()
 
     camera:detach()
     camera:draw()
@@ -101,7 +101,7 @@ function love.draw()
   love.graphics.draw(canvas, 0, 0, 0, SCALE, SCALE)
   love.graphics.setBlendMode('alpha')
   
-  debug()
+  --debug()
 end
 
 function drawCurtain()

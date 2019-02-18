@@ -7,7 +7,7 @@ function Horde.new()
     time = 0,
     enemies = {},
     speed = 0,
-    frequency = 1,
+    frequency = 2,
   }, Horde)
 end
 
