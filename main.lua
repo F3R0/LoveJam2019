@@ -44,6 +44,16 @@ function love.load()
   canvas = love.graphics.newCanvas(960, 200)
 end
 
+function reset()
+  map.health = 100
+  horde.enemies = {}
+  horde.speed = 0
+  horde.frequency = 2
+  player.x = 160
+  player.y = 100
+  camera = _camera(160, 100, 320, 200)
+end
+
 function love.update(dt)
   if gameState == SceneStates.menu then
     menuMusic:play()
@@ -66,6 +76,7 @@ function love.update(dt)
     camera:follow(player.x, player.y)
   elseif gameState == SceneStates.ending then
   if input:pressed('skip') then
+    reset()
     stateToGo     = SceneStates.menu
     curtain_start = true
     end
