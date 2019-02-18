@@ -51,7 +51,7 @@ function reset()
   horde.frequency = 2
   player.x = 160
   player.y = 100
-  camera = _camera(160, 100, 320, 200)
+  --camera = _camera(160, 100, 320, 200)
 end
 
 function love.update(dt)
