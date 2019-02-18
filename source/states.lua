@@ -1,12 +1,13 @@
-SceneState = {
-  menu = 0,
-  game = 1,
-  cred = 2
+SceneStates = {
+  menu    = 'menu',
+  intro   = 'intro',
+  game    = 'game',
+  credits = 'credits'
 }
 
 Directions = {
-  up = 'up', 
-  down = 'down', 
-  left = 'left', 
+  up    = 'up', 
+  down  = 'down', 
+  left  = 'left', 
   right = 'right' 
 }
