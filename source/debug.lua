@@ -18,6 +18,10 @@ function debug()
 
   --drag power
   lg.print('drag power: ' .. player.drag_power, 1, 56)
+
+  --horde speed and frequency
+  lg.print('horde speed: ' .. horde.speed, 1, 67)
+  lg.print('horde freq: ' .. horde.frequency, 1, 76)
 end
 
 function debugCanvas()

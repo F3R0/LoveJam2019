@@ -25,6 +25,12 @@ function love.load()
 
   menu = lg.newImage('graphics/menu/title.png')
   intro = lg.newImage('graphics/menu/intro.png')
+  ending = lg.newImage('graphics/menu/ending.png')
+  curtain = lg.newImage('graphics/menu/curtain.png')
+
+  curtain_darken = true
+  curtain_start  = false
+  curtain_alpha = 1
   
   input:bind('space', 'skip')
 
@@ -35,11 +41,13 @@ end
 function love.update(dt)
   if gameState == SceneStates.menu then
     if input:pressed('skip') then
-      gameState = SceneStates.intro
+      stateToGo     = SceneStates.intro
+      curtain_start = true
     end
   elseif gameState == SceneStates.intro then
     if input:pressed('skip') then
-      gameState = SceneStates.game
+      stateToGo     = SceneStates.game
+      curtain_start = true
     end
   elseif gameState == SceneStates.game then
     map:update(dt)
@@ -47,7 +55,14 @@ function love.update(dt)
     horde:update(dt)
     camera:update(dt)
     camera:follow(player.x, player.y)
+  elseif gameState == SceneStates.ending then
+  if input:pressed('skip') then
+    stateToGo     = SceneStates.menu
+    curtain_start = true
+    end
   end
+
+  updateCurtain(dt)
 end
 
 function love.draw()
@@ -73,7 +88,11 @@ function love.draw()
     camera:draw()
 
     map:drawBars()
+  elseif gameState == SceneStates.ending then
+    lg.draw(ending, 0, 0)
   end
+
+  drawCurtain()
   
   -- Draw the 400x300 canvas scaled by 2 to a 800x600 screen
   love.graphics.setCanvas()
@@ -82,5 +101,34 @@ function love.draw()
   love.graphics.draw(canvas, 0, 0, 0, SCALE, SCALE)
   love.graphics.setBlendMode('alpha')
   
-  --debug()
+  debug()
+end
+
+function drawCurtain()
+	lg.setColor(1, 1, 1, 1 - curtain_alpha);
+	lg.draw(curtain, 0, 0, 0);
+	lg.setColor(1, 1, 1, 1);
+end
+
+function updateCurtain(dt)
+	if not curtain_start then
+		return
+	end
+
+	if curtain_darken then
+		if curtain_alpha > 0 then
+			curtain_alpha = curtain_alpha - dt / 2
+		else
+			gameState = stateToGo
+
+			curtain_darken = false
+		end
+	else
+		if curtain_alpha < 1 then
+			curtain_alpha = curtain_alpha + dt / 2
+		else
+			curtain_darken = true
+			curtain_start  = false
+		end
+	end
 end

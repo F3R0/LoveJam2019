@@ -5,14 +5,24 @@ function Horde.new()
   return setmetatable({
     count = 0,
     time = 0,
-    enemies = {}
+    enemies = {},
+    speed = 0,
+    frequency = 1,
   }, Horde)
 end
 
 function Horde:update(dt)
   self.time = self.time + dt
 
-  if math.floor(self.time) > 1 then
+  if self.speed < 20 then
+    self.speed = self.speed + dt / 30
+  end
+
+  if self.frequency > 0.2 then
+    self.frequency = self.frequency - dt / 300
+  end
+
+  if math.floor(self.time) > self.frequency then
     table.insert(self.enemies, _enemy())
 
     table.sort(self.enemies)

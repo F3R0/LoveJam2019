@@ -20,7 +20,7 @@ function Enemy.new()
   local anim_dying = anim.new(img_dying, 53, 46, 0.1)
 
   return setmetatable({
-    speed = math.random(20, 40),
+    speed = math.random(20, 40) + horde.speed,
     anims = {
       walk = anim_walk,
       attack = anim_attack,

@@ -21,6 +21,11 @@ function Map:update(dt)
 
   self.health = self.health - dt * danger
   danger = 0
+
+  if self.health < 0 then
+    stateToGo     = SceneStates.ending
+    curtain_start = true
+  end
 end
 
 function Map:draw()

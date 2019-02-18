@@ -2,7 +2,7 @@ SceneStates = {
   menu    = 'menu',
   intro   = 'intro',
   game    = 'game',
-  credits = 'credits'
+  ending  = 'ending'
 }
 
 Directions = {

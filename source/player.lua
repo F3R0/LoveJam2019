@@ -166,7 +166,7 @@ function Player:update(dt)
     end
   end
 
-  if input:pressed('hit') then
+  if input:pressed('hit') and not self.hit then
     self.hit = true
 
     for i, enemy in ipairs(horde.enemies) do
