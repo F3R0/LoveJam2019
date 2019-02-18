@@ -27,13 +27,13 @@ end
 function debugCanvas()
   --enemy hitbox
   for i, enemy in ipairs(horde.enemies) do
-    lg.rectangle("line", enemy.pos.x, enemy.pos.y, enemy.size.w, enemy.size.h)
+    lg.rectangle("line", enemy.pos.x + 10, enemy.pos.y, enemy.size.w - 20, enemy.size.h)
   end
 
   --player hitbox
   if player.face == 1 then
-    lg.rectangle("line", player.x, player.y - player.h / 2, player.w / 2, player.h)
+    lg.rectangle("line", player.x, player.y - player.h / 4, player.w / 2, player.h * 3 / 4)
   else
-    lg.rectangle("line", player.x - player.w / 2, player.y - player.h / 2, player.w / 2, player.h)      
+    lg.rectangle("line", player.x - player.w / 2, player.y - player.h / 4, player.w / 2, player.h * 3 / 4)      
   end
 end

@@ -82,7 +82,7 @@ function love.draw()
     player:draw()
     horde:draw(true)
 
-    --debugCanvas()
+    debugCanvas()
 
     camera:detach()
     camera:draw()

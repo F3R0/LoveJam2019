@@ -28,15 +28,15 @@ end
 
 local function checkHit(self, face, enemyPos, enemySize)
   if face == 1 then 
-    return  self.x              < enemyPos.x + enemySize.w and
-            enemyPos.x          < self.x + self.w / 2      and
-            self.y - self.h / 2 < enemyPos.y + enemySize.h and
-            enemyPos.y          < self.y + self.h / 2
+    return  self.x              < enemyPos.x + enemySize.w - 20 and
+            enemyPos.x + 10     < self.x + self.w / 2           and
+            self.y - self.h / 4 < enemyPos.y + enemySize.h      and
+            enemyPos.y          < self.y + self.h / 4
   else
-    return  self.x - self.w / 2 < enemyPos.x + enemySize.w and
-            enemyPos.x          < self.x                   and
-            self.y - self.h / 2 < enemyPos.y + enemySize.h and
-            enemyPos.y          < self.y + self.h / 2
+    return  self.x - self.w / 2 < enemyPos.x + enemySize.w - 20 and
+            enemyPos.x + 10     < self.x                        and
+            self.y - self.h / 4 < enemyPos.y + enemySize.h      and
+            enemyPos.y          < self.y + self.h / 4
   end
 end
 
@@ -124,7 +124,7 @@ function Player:update(dt)
       self.audio.drag:stop()
     end
     
-    if self.drag_power < 5 and self.walk then self.drag_power = self.drag_power + dt end
+    if self.drag_power < 5 and self.walk then self.drag_power = self.drag_power + dt * 2 end
     
     if self.drag_power > 2 and not self.walk then self.drag_power = self.drag_power - dt * 5 end
   else
