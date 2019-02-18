@@ -83,7 +83,7 @@ function Player.new()
 
     return setmetatable({
       anims = anim_set,
-      anim = nil,
+      anim = anim_idle_up,
       w = 80,
       h = 60,
       x = 160,
@@ -97,7 +97,9 @@ function Player.new()
       drag_power = 1,
       audio = {
         slash_1 = la.newSource("sound/Slash1.wav", "static"),
-        slash_2 = la.newSource("sound/Slash2.wav", "static")
+        slash_2 = la.newSource("sound/Slash2.wav", "static"),
+        drag    = la.newSource("sound/swordfriction.wav", "static"),
+        hit     = la.newSource("sound/PlayerHitEnemy.wav", "static")
       }
     }, Player)
 end
@@ -115,14 +117,21 @@ function Player:update(dt)
   --dragging weapon
   if input:down('drag') then 
     self.drag = true
+
+    if self.walk and not self.hit then
+      self.audio.drag:play()
+    else 
+      self.audio.drag:stop()
+    end
     
-    if self.drag_power < 20 and self.walk then self.drag_power = self.drag_power + dt * 5 end
+    if self.drag_power < 5 and self.walk then self.drag_power = self.drag_power + dt end
     
-    if self.drag_power > 2 and not self.walk then self.drag_power = self.drag_power - dt * 20 end
+    if self.drag_power > 2 and not self.walk then self.drag_power = self.drag_power - dt * 5 end
   else
     self.drag = false
+    self.audio.drag:stop()
 
-    if self.drag_power > 1 then self.drag_power = self.drag_power - dt * 20 end
+    if self.drag_power > 1 then self.drag_power = self.drag_power - dt * 5 end
   end
 
   --hitting
@@ -163,12 +172,13 @@ function Player:update(dt)
     for i, enemy in ipairs(horde.enemies) do
       if checkHit(self, self.face, enemy.pos, enemy.size) and not enemy.damaged then
 
-        enemy.health = enemy.health - 20 * self.drag_power
+        enemy.health = enemy.health - 25 * self.drag_power
         enemy.damaged = true
+        self.audio.hit:play()
       end
     end
 
-    if self.drag_power > 10 then
+    if self.drag_power > 2 then
       camera:shake(8, 1, 60)
       self.anim = self.anims.attack_heavy
       self.audio.slash_2:play()
