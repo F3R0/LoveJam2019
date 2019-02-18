@@ -28,18 +28,27 @@ function love.load()
   ending = lg.newImage('graphics/menu/ending.png')
   curtain = lg.newImage('graphics/menu/curtain.png')
 
+  gameMusic = la.newSource('sound/gamemusic.mp3', 'stream')
+  gameMusic:setLooping(true)
+
+  menuMusic = la.newSource('sound/menumusic.mp3', 'stream')
+  menuMusic:setLooping(true)
+  
   curtain_darken = true
   curtain_start  = false
   curtain_alpha = 1
   
   input:bind('space', 'skip')
-
+  
   --canvas
   canvas = love.graphics.newCanvas(960, 200)
 end
 
 function love.update(dt)
   if gameState == SceneStates.menu then
+    menuMusic:play()
+    gameMusic:stop()
+  
     if input:pressed('skip') then
       stateToGo     = SceneStates.intro
       curtain_start = true
@@ -115,15 +124,28 @@ function updateCurtain(dt)
 		return
 	end
 
-	if curtain_darken then
+  if curtain_darken then
+    if gameState == SceneStates.intro then
+      menuMusic:setVolume(curtain_alpha);
+    end
+
 		if curtain_alpha > 0 then
 			curtain_alpha = curtain_alpha - dt / 2
-		else
-			gameState = stateToGo
-
-			curtain_darken = false
+    else
+      gameState = stateToGo
+      curtain_darken = false
+      
+      if gameState == SceneStates.game then
+        menuMusic:stop()
+        gameMusic:play()
+        gameMusic:setVolume(0)
+      end
 		end
-	else
+  else
+    if gameState == SceneStates.game then
+      gameMusic:setVolume(curtain_alpha - 0.3);
+    end
+
 		if curtain_alpha < 1 then
 			curtain_alpha = curtain_alpha + dt / 2
 		else
